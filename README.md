@@ -1,0 +1,2 @@
+# eazyShop
+shopping made easy
