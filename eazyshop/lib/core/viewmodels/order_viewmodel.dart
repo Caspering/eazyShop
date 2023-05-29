@@ -16,7 +16,7 @@ class OrderViewModel {
 
       final newDocumentReference = collectionReference.doc();
 
-      final order = Order(
+      final order = OrderModel(
         id: newDocumentReference.id,
         userId: userId,
         total: cart.total,
