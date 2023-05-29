@@ -10,7 +10,7 @@ class Product {
   final bool? isDiscounted;
   final String? productImage;
   final String? category;
-  final List? subscribers;
+
   Product(
       {this.dateAdded,
       this.description,
@@ -18,7 +18,6 @@ class Product {
       this.id,
       this.isDiscounted,
       this.isFlash,
-      this.subscribers,
       this.price,
       this.productImage,
       this.productName,
@@ -26,7 +25,6 @@ class Product {
       this.sellerId});
   Product.fromMap(Map snapshot, this.id)
       : dateAdded = snapshot['dateAdded'],
-        subscribers = snapshot['subscribers'],
         description = snapshot['description'],
         discountPrice = snapshot['discountPrice'],
         isDiscounted = snapshot['isDiscounted'],
@@ -41,7 +39,6 @@ class Product {
       "dateAdded": dateAdded,
       "description": description,
       "discountPrice": discountPrice,
-      "subscribers": subscribers,
       "isDiscounted": isDiscounted,
       "isFlash": isFlash,
       "price": price,

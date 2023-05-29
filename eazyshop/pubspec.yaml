@@ -50,7 +50,6 @@ dev_dependencies:
   velocity_x: ^3.5.0
   firebase_storage: ^10.3.11
   flutter_otp_text_field: ^1.0.1
-  modal_bottom_sheet: ^2.0.0
   flutter_rating_bar: ^4.0.0
   firebase_dynamic_links: ^4.3.11
   shared_preferences: ^2.0.6
