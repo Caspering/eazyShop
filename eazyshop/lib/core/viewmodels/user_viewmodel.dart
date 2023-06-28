@@ -28,8 +28,8 @@ class UserViewmodel extends ChangeNotifier {
   String? get instagramLink => _instagramLink;
   String? get imageUrl => _imageUrl;
   File? get image => _image;
-  Ceo? _currentCeo;
-  Ceo? get currentCeo => _currentCeo;
+  Users? _currentCeo; // Updated class name
+  Users? get currentCeo => _currentCeo;
   final Api _api = Api("users");
   setUsername(name) {
     _username = name;
@@ -39,13 +39,16 @@ class UserViewmodel extends ChangeNotifier {
     _imageUrl = await Storage().uploadImage(image, uid, "Users");
   }
 
-  setCeo(Ceo cceo) {
+  setCeo(Users cceo) {
+    // Updated class name
     _currentCeo = cceo;
   }
 
-  Future<Ceo> getCeoById(id) async {
+  Future<Users> getCeoById(id) async {
+    // Updated class name
     var doc = await _api.getDocumentById(id);
-    return Ceo.fromMap(doc.data() as Map<String, dynamic>, id);
+    return Users.fromMap(
+        doc.data() as Map<String, dynamic>, id); // Updated class name
   }
 
   updateName(first, second, uid, username) {
@@ -79,7 +82,8 @@ class UserViewmodel extends ChangeNotifier {
     }
   }
 
-  Future addUser(Ceo data, uid) async {
+  Future addUser(Users data, uid) async {
+    // Updated class name
     var result = await _api.setData(data.toJson(), uid);
     return result;
   }

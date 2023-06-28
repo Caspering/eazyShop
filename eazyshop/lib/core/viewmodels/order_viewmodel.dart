@@ -26,7 +26,7 @@ class OrderViewModel {
                 price: item.price,
                 quantity: item.quantity,
                 shopName: item.shopName,
-                imageUrl: item.imageUrl))
+                imageUrl: item.imageUrl ?? ""))
             .toList(),
         timestamp: DateTime.now(),
       );

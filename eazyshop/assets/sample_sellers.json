@@ -1,0 +1,23 @@
+[
+    {
+        "id": "seller123",
+        "name": "ABC Electronics",
+        "logoUrl": "abc-electronics-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 250
+    },
+    {
+        "id": "seller456",
+        "name": "XYZ Fashion Store",
+        "logoUrl": "xyz-fashion-store-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 150
+    },
+    {
+        "id": "seller789",
+        "name": "PQR Home Goods",
+        "logoUrl": "pqr-home-goods-logo.jpg",
+        "totalRating": 4.5,
+        "totalRaters": 200
+    }
+]

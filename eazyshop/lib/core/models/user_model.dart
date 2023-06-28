@@ -1,4 +1,4 @@
-class Ceo {
+class Users {
   String? id;
   String? firstname;
   String? lastname;
@@ -11,20 +11,23 @@ class Ceo {
   String? imageUrl;
   String? username;
   List? subscribers;
-  Ceo(
-      {this.id,
-      this.bio,
-      this.ceoScore,
-      this.firstname,
-      this.instagramLink,
-      this.lastname,
-      this.phoneNumber,
-      this.twitterLink,
-      this.imageUrl,
-      this.subscribers,
-      this.whatsappLink,
-      this.username});
-  Ceo.fromMap(Map snapshot, this.id)
+
+  Users({
+    this.id,
+    this.bio,
+    this.ceoScore,
+    this.firstname,
+    this.instagramLink,
+    this.lastname,
+    this.phoneNumber,
+    this.twitterLink,
+    this.imageUrl,
+    this.subscribers,
+    this.whatsappLink,
+    this.username,
+  });
+
+  Users.fromMap(Map snapshot, this.id)
       : bio = snapshot['bio'],
         ceoScore = snapshot['ceoScore'],
         subscribers = snapshot['subscribers'],
@@ -36,6 +39,7 @@ class Ceo {
         phoneNumber = snapshot['phoneNumber'],
         whatsappLink = snapshot['whatsappLink'],
         twitterLink = snapshot['twitterLink'];
+
   toJson() {
     return {
       "bio": bio,

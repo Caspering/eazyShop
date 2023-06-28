@@ -1,10 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product_model.dart';
 import '../services/api.dart';
 import '../services/firebase_storage.dart';
+
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<String> getJson() {
+  return rootBundle.loadString('assets/sample_products.json');
+}
 
 class ProductViewmodel extends ChangeNotifier {
   String? _category;
@@ -17,8 +24,13 @@ class ProductViewmodel extends ChangeNotifier {
   File? get image => _image;
   final Api _api = Api("products");
   List<Product> products = [];
+  List<Product> fitness = [];
   List<Product> flashes = [];
+  List<Product> gifts = [];
   List<Product> categoryProducts = [];
+  List<Product> subscriptions = [];
+  List<Product> ceoProducts = [];
+  List<Product> ceoFlash = [];
   BuildContext? _context;
   List<Product>? _currentList;
   List<Product>? get currentList => _currentList;
@@ -40,6 +52,17 @@ class ProductViewmodel extends ChangeNotifier {
     _product = currentProduct;
   }
 
+  Future<List<Product>> getSubscribedItems(userId) async {
+    var result = await _api.queryWhereArrayContainsAndIsEqualTo(
+        false, "isFlash", userId, "subscribers");
+    subscriptions = result.docs
+        .map((doc) =>
+            Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return subscriptions;
+  }
+
   Future<List<Product>> getRecommendedItems() async {
     var result = await _api.getWhereIsEqualTo(false, "isFlash");
     products = result.docs
@@ -48,6 +71,27 @@ class ProductViewmodel extends ChangeNotifier {
         .toList();
     products.shuffle();
     return products.take(6).toList();
+  }
+
+  Future<List<Product>> getCeoProducts(uid) async {
+    var result =
+        await _api.queryWhereEqualTox2(false, "isFlash", uid, "sellerId");
+    ceoProducts = result.docs
+        .map((doc) =>
+            Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return ceoProducts;
+  }
+
+  Future<List<Product>> getCeoFlash(uid) async {
+    var result = await _api.getRecentDocsCeo(uid);
+    ceoFlash = result.docs
+        .map((doc) =>
+            Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return ceoFlash;
   }
 
   setAsFlash(productId, newPrice) {
@@ -95,5 +139,27 @@ class ProductViewmodel extends ChangeNotifier {
   Future addProduct(Product data) async {
     var result = await _api.addData(data.toJson());
     return result;
+  }
+
+// Assuming you have a list of JSON data
+
+// Create a Firestore instance
+
+  void batchWrite() async {
+    WriteBatch batch = firestore.batch();
+
+    CollectionReference productsCollection = firestore.collection('products');
+    var my_data = json.decode(await getJson());
+
+    my_data.forEach((jsonData) {
+      DocumentReference docRef = productsCollection.doc(jsonData['id']);
+      batch.set(docRef, jsonData);
+    });
+
+    batch.commit().then((value) {
+      print('Batch write succeeded!');
+    }).catchError((error) {
+      print('Batch write failed: $error');
+    });
   }
 }

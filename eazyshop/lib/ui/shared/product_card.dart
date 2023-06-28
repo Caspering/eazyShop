@@ -38,8 +38,8 @@ class ProductCardState extends State<ProductCard> {
                   height: MediaQuery.of(context).size.height / 3.5,
                   child: ClipRRect(
                       // ignore: prefer_const_constructors
-                      child: CachedNetworkImage(
-                        imageUrl: widget.url!,
+                      child: Image.asset(
+                        "assets/indoor-shot-adorable-female-buyer-spending-her-free-time-boutique-standing-near-dummy-with-clothes-reading-news-online-while-using-free-internet-connection-shop-assistant-selling-clothes copy.jpg",
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(15)),
