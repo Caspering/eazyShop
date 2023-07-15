@@ -20,7 +20,7 @@ class _CartIconState extends State<CartIcon> {
   @override
   Widget build(BuildContext context) {
     CartViewmodel _cartViewmodel = Provider.of<CartViewmodel>(context);
-    int itemCount = _cartViewmodel.itemCount;
+    int itemCount = _cartViewmodel.overallCartItemCount;
     return Stack(
       children: [
         IconButton(

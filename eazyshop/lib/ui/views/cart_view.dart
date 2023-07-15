@@ -8,7 +8,8 @@ import '../../utils/font_size.dart';
 import '../../utils/router.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  String shopName;
+  CartScreen({super.key, required this.shopName});
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -18,12 +19,13 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     CartViewmodel _cartViewmodel = Provider.of<CartViewmodel>(context);
+    String vendorId = _cartViewmodel.currentVendor ?? "";
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
               onPressed: () {
-                _cartViewmodel.clear();
+                _cartViewmodel.clearCartForVendor(vendorId);
               },
               icon: Icon(
                 Icons.delete_outline,
@@ -43,20 +45,22 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
         title: Text(
-          "Cart(${_cartViewmodel.itemCount})",
+          "${widget.shopName}(${_cartViewmodel.getCartItemCountForVendor(vendorId)})",
           style: TextStyle(color: ceoPurple, fontSize: TextSize().h3(context)),
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: _cartViewmodel.items.isNotEmpty
+          //  height: MediaQuery.of(context).size.height,
+          child: _cartViewmodel.getCartForVendor(vendorId).isNotEmpty
               ? Column(
                   children: [
                     Column(
                       children: [
                         for (int index = 0;
-                            index < _cartViewmodel.itemCount;
+                            index <
+                                _cartViewmodel
+                                    .getCartItemCountForVendor(vendorId);
                             index++)
                           Container(
                             margin: EdgeInsets.all(10),
@@ -66,7 +70,9 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             child: CustomListTile(
                               title: Text(
-                                _cartViewmodel.items[index].name,
+                                _cartViewmodel
+                                    .getCartForVendor(vendorId)[index]
+                                    .name,
                                 style: TextStyle(
                                   fontSize: TextSize().p(context),
                                   fontWeight: FontWeight.w500,
@@ -74,7 +80,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                               subtitle: Text(
-                                '\u20A6${_cartViewmodel.items[index].total}',
+                                '\u20A6${_cartViewmodel.getCartForVendor(vendorId)[index].total}',
                                 style: TextStyle(
                                   fontSize: TextSize().p(context),
                                   fontWeight: FontWeight.w600,
@@ -87,14 +93,18 @@ class _CartScreenState extends State<CartScreen> {
                                     icon: Icon(Icons.remove_circle),
                                     onPressed: () {
                                       // Decrease quantity logic
-                                      _cartViewmodel.decreaseQuantity(
-                                          _cartViewmodel.items[index]);
+                                      _cartViewmodel.decreaseQuantityForVendor(
+                                          _cartViewmodel.getCartForVendor(
+                                              vendorId)[index],
+                                          vendorId);
                                     },
                                   ),
                                   Text(
                                     _cartViewmodel
-                                        .getQuantity(
-                                            _cartViewmodel.items[index])
+                                        .getQuantityForVendor(
+                                            _cartViewmodel.getCartForVendor(
+                                                vendorId)[index],
+                                            vendorId)
                                         .toString(),
                                     style: TextStyle(fontSize: 16),
                                   ),
@@ -102,8 +112,10 @@ class _CartScreenState extends State<CartScreen> {
                                     icon: Icon(Icons.add_circle),
                                     onPressed: () {
                                       // Increase quantity logic
-                                      _cartViewmodel.increaseQuantity(
-                                          _cartViewmodel.items[index]);
+                                      _cartViewmodel.increaseQuantityForVendor(
+                                          _cartViewmodel.getCartForVendor(
+                                              vendorId)[index],
+                                          vendorId);
                                     },
                                   ),
                                 ],
@@ -127,7 +139,7 @@ class _CartScreenState extends State<CartScreen> {
                       ],
                     ),
                     Text(
-                      'Subtotal: \u20A6${_cartViewmodel.subtotal}',
+                      'Subtotal: \u20A6${_cartViewmodel.getCartSubtotalForVendor(vendorId)}',
                       style: TextStyle(
                           fontSize: TextSize().h3(context),
                           fontWeight: FontWeight.w500,
@@ -138,7 +150,7 @@ class _CartScreenState extends State<CartScreen> {
               : Empty(),
         ),
       ),
-      bottomNavigationBar: _cartViewmodel.items.isNotEmpty
+      bottomNavigationBar: _cartViewmodel.getCartForVendor(vendorId).isNotEmpty
           ? BottomAppBar(
               padding: EdgeInsets.all(10),
               elevation: 0.0,

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:eazyshop/ui/components/shops_list_view.dart';
 import 'package:eazyshop/utils/font_size.dart';
 import 'package:flutter/material.dart';
 
@@ -24,12 +25,12 @@ class _HomeState extends State<Home> {
       color: ceoWhite,
       child: SingleChildScrollView(
           child: Container(
-        // height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Our Products",
+              "Stores around you",
               style: TextStyle(
                   fontSize: TextSize().h1(context),
                   color: ceoPurple,
@@ -38,11 +39,7 @@ class _HomeState extends State<Home> {
             Container(
               height: 5,
             ),
-            Recommended(),
-            CustomRow(category: "Electronics", header: "Tech Zone📱"),
-            CustomRow(
-                category: "Home and Office", header: "Living and Working🏢"),
-            CustomRow(category: "Health and Beauty", header: "Glow Up")
+            Expanded(child: ShopList())
           ],
         ),
       )),

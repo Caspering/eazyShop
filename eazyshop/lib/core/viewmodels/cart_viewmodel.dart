@@ -6,107 +6,153 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/cart_item.dart';
 
 class CartViewmodel extends ChangeNotifier {
-  List<CartItem> _items = [];
+  Map<String, List<CartItem>> _carts = {};
 
-  List<CartItem> get items => List.unmodifiable(_items);
+  Map<String, List<CartItem>> get carts => Map.unmodifiable(_carts);
 
-  int get itemCount => _items.length;
+  List<CartItem> getCartForVendor(String vendorId) {
+    return _carts[vendorId] ?? [];
+  }
 
-  double get subtotal => _items.fold(0, (sum, item) => sum + item.total);
+  List<String> getVendorList() {
+    return _carts.keys.toList();
+  }
 
-  double get tax => subtotal * 0.1;
+  String? _currentVendor;
+  String? get currentVendor => _currentVendor;
+  setCurrentVendor(id) {
+    _currentVendor = id;
+  }
 
-  double get total => subtotal + tax;
+  int get overallCartItemCount {
+    return _carts.values.fold(0, (sum, cart) => sum + cart.length);
+  }
 
-  Future<void> addItem(CartItem item) async {
-    var index = _items.indexWhere((i) => i.name == item.name);
+  int getCartItemCountForVendor(String vendorId) {
+    final cart = _carts[vendorId];
+    return cart != null ? cart.length : 0;
+  }
 
-    if (index >= 0) {
-      _items[index].quantity += item.quantity;
+  double getCartSubtotalForVendor(String vendorId) {
+    final cart = _carts[vendorId];
+    return cart != null ? cart.fold(0, (sum, item) => sum + item.total) : 0.0;
+  }
+
+  double getCartTaxForVendor(String vendorId) {
+    final subtotal = getCartSubtotalForVendor(vendorId);
+    return subtotal * 0.1;
+  }
+
+  double getCartTotalForVendor(String vendorId) {
+    final subtotal = getCartSubtotalForVendor(vendorId);
+    final tax = getCartTaxForVendor(vendorId);
+    return subtotal + tax;
+  }
+
+  Future<void> addItemToCartForVendor(CartItem item, String vendorId) async {
+    if (_carts.containsKey(vendorId)) {
+      final cart = _carts[vendorId];
+      final index = cart!.indexWhere((i) => i.name == item.name);
+      if (index >= 0) {
+        cart[index].quantity += item.quantity;
+      } else {
+        cart.add(item);
+      }
     } else {
-      _items.add(item);
+      _carts[vendorId] = [item];
     }
-    await saveCart();
+    await saveCarts();
     notifyListeners();
   }
 
-  Future<void> removeItem(CartItem item) async {
-    _items.removeWhere((i) => i.name == item.name);
-    notifyListeners();
-    await saveCart();
-  }
-
-  Future<void> clear() async {
-    _items.clear();
-    notifyListeners();
-    await saveCart();
-  }
-
-  bool isItemInCart(CartItem item) {
-    return _items.any((i) => i.name == item.name);
-  }
-
-  Future<void> increaseQuantity(CartItem item) async {
-    var index = _items.indexWhere((i) => i.name == item.name);
-
-    if (index >= 0) {
-      _items[index].quantity++;
-      notifyListeners();
-      await saveCart();
-    }
-  }
-
-  Future<void> decreaseQuantity(CartItem item) async {
-    var index = _items.indexWhere((i) => i.name == item.name);
-
-    if (index >= 0) {
-      if (_items[index].quantity > 1) {
-        _items[index].quantity--;
-      } else {
-        _items.removeAt(index);
+  Future<void> removeItemFromCartForVendor(
+      CartItem item, String vendorId) async {
+    if (_carts.containsKey(vendorId)) {
+      final cart = _carts[vendorId];
+      cart!.removeWhere((i) => i.name == item.name);
+      if (cart.isEmpty) {
+        _carts.remove(vendorId);
       }
       notifyListeners();
-      await saveCart();
+      await saveCarts();
     }
   }
 
-  int getQuantity(CartItem item) {
-    var index = _items.indexWhere((i) => i.name == item.name);
-
-    if (index >= 0) {
-      return _items[index].quantity;
+  Future<void> clearCartForVendor(String vendorId) async {
+    if (_carts.containsKey(vendorId)) {
+      _carts.remove(vendorId);
+      notifyListeners();
+      await saveCarts();
     }
-
-    return 0;
   }
 
-  Future<void> loadCart() async {
+  bool isItemInCartForVendor(CartItem item, String vendorId) {
+    final cart = _carts[vendorId];
+    return cart != null && cart.any((i) => i.name == item.name);
+  }
+
+  Future<void> increaseQuantityForVendor(CartItem item, String vendorId) async {
+    if (_carts.containsKey(vendorId)) {
+      final cart = _carts[vendorId];
+      final index = cart!.indexWhere((i) => i.name == item.name);
+      if (index >= 0) {
+        cart[index].quantity++;
+        notifyListeners();
+        await saveCarts();
+      }
+    }
+  }
+
+  Future<void> decreaseQuantityForVendor(CartItem item, String vendorId) async {
+    if (_carts.containsKey(vendorId)) {
+      final cart = _carts[vendorId];
+      final index = cart!.indexWhere((i) => i.name == item.name);
+      if (index >= 0) {
+        if (cart[index].quantity > 1) {
+          cart[index].quantity--;
+        } else {
+          cart.removeAt(index);
+        }
+        notifyListeners();
+        await saveCarts();
+      }
+    }
+  }
+
+  int getQuantityForVendor(CartItem item, String vendorId) {
+    final cart = _carts[vendorId];
+    final index = cart?.indexWhere((i) => i.name == item.name);
+    return index != null && index >= 0 ? cart![index].quantity : 0;
+  }
+
+  Future<void> loadCarts() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final cartData = prefs.getString('cart');
-      if (cartData != null && cartData.isNotEmpty) {
-        final List<dynamic> jsonList = jsonDecode(cartData);
-        print(cartData);
-        _items = jsonList.map((json) => CartItem.fromJson(json)).toList();
-        print(_items);
+      final cartsData = prefs.getString('carts');
+      if (cartsData != null && cartsData.isNotEmpty) {
+        final Map<String, dynamic> jsonMap = jsonDecode(cartsData);
+        _carts = jsonMap.map((key, value) => MapEntry(key,
+            (value as List).map((json) => CartItem.fromJson(json)).toList()));
       } else {
-        _items = [];
+        _carts = {};
       }
     } catch (e) {
-      print('Error loading cart: $e');
+      print('Error loading carts: $e');
     }
   }
 
-  Future<void> saveCart() async {
+  Future<void> saveCarts() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final cartData = jsonEncode(_items.map((item) => item.toJson()).toList());
-      _items = _items
-          .map((item) => item)
-          .toList(); // Update _items with modified list
-      await prefs.setString('cart', cartData);
+      final cartsData = jsonEncode(
+        _carts.map((key, value) => MapEntry(
+              key,
+              value.map((item) => item.toJson()).toList(),
+            )),
+      );
+      await prefs.setString('carts', cartsData);
     } catch (e) {
-      print('Error saving cart: $e');
+      print('Error saving carts: $e');
     }
   }
 }

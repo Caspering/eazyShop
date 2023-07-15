@@ -89,11 +89,11 @@ class OnboardingOneState extends State<OnboardingOne> {
                   // ignore: sort_child_properties_last
                   child: MaterialButton(
                     onPressed: () async {
-                      await _cartViewmodel.loadCart();
-                      print(_cartViewmodel.items);
+                      await _cartViewmodel.loadCarts();
+                      print(_cartViewmodel.carts);
                       authService.getAuthState();
                       print(authService.userId);
-                      //productViewmodel.batchWrite();
+                      //   productViewmodel.batchWrite();
                       if (authService.authState == true) {
                         try {
                           PopUp().popLoad(context);

@@ -10,7 +10,7 @@ import '../services/firebase_storage.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 Future<String> getJson() {
-  return rootBundle.loadString('assets/sample_products.json');
+  return rootBundle.loadString('assets/sample_sellers.json');
 }
 
 class ProductViewmodel extends ChangeNotifier {
@@ -148,7 +148,7 @@ class ProductViewmodel extends ChangeNotifier {
   void batchWrite() async {
     WriteBatch batch = firestore.batch();
 
-    CollectionReference productsCollection = firestore.collection('products');
+    CollectionReference productsCollection = firestore.collection('sellers');
     var my_data = json.decode(await getJson());
 
     my_data.forEach((jsonData) {

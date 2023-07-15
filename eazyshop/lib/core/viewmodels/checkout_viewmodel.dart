@@ -6,10 +6,11 @@ class Checkout extends ChangeNotifier {
 
   Checkout({required this.cart});
 
-  void processPayment() {
+  void processPayment(vendorId) {
     //payment logic here...
-    print('Payment processed for total of \$${cart.total}');
-    cart.clear();
+    print(
+        'Payment processed for total of \$${cart.getCartTaxForVendor(vendorId)}');
+    cart.clearCartForVendor(vendorId);
   }
 
   void cancel() {

@@ -5,8 +5,8 @@ import '../models/order_model.dart';
 
 class OrderViewModel {
   final CartViewmodel cart;
-
-  OrderViewModel({required this.cart});
+  final String vendorId;
+  OrderViewModel({required this.cart, required this.vendorId});
 
   Future<void> sendOrderToFirestore(userId) async {
     try {
@@ -19,13 +19,14 @@ class OrderViewModel {
       final order = OrderModel(
         id: newDocumentReference.id,
         userId: userId,
-        total: cart.total,
-        items: cart.items
+        total: cart.getCartTotalForVendor(vendorId),
+        items: cart
+            .getCartForVendor(vendorId)
             .map((item) => OrderItem(
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
-                shopName: item.shopName,
+                shopId: item.shopId,
                 imageUrl: item.imageUrl ?? ""))
             .toList(),
         timestamp: DateTime.now(),

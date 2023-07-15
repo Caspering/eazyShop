@@ -3,14 +3,14 @@ class CartItem {
   double price;
   int quantity;
   String? imageUrl;
-  String shopName;
+  String shopId;
 
   CartItem(
       {required this.name,
       required this.price,
       this.quantity = 1,
       this.imageUrl,
-      required this.shopName});
+      required this.shopId});
 
   double get total => price * quantity;
   factory CartItem.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class CartItem {
         price: json['price'],
         quantity: json['quantity'],
         imageUrl: json['imageUrl'] ?? "",
-        shopName: json['shotName'] ?? "");
+        shopId: json['shotName'] ?? "");
   }
   Map<String, dynamic> toJson() {
     return {
@@ -27,7 +27,7 @@ class CartItem {
       'price': price,
       'quantity': quantity,
       'imageUrl': imageUrl ?? "",
-      'shopName': shopName,
+      'shopName': shopId,
     };
   }
 }

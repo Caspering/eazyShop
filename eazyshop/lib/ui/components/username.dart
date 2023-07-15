@@ -1,3 +1,5 @@
+import 'package:eazyshop/core/models/seller_model.dart';
+import 'package:eazyshop/core/viewmodels/seller_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,12 +19,12 @@ class Username extends StatefulWidget {
 class _UsernameState extends State<Username> {
   @override
   Widget build(BuildContext context) {
-    final userViewModel = Provider.of<UserViewmodel>(context);
-    return FutureBuilder<Users>(
-        future: userViewModel.getCeoById(widget.userId),
+    final sellerViewmodel = Provider.of<SellerViewmodel>(context);
+    return FutureBuilder<Seller>(
+        future: sellerViewmodel.getCeoById(widget.userId),
         builder: (context, snapshot) {
           return Text(
-            'by ${snapshot.data?.firstname}',
+            'by ${snapshot.data?.name}',
             style: TextStyle(
                 fontSize: TextSize().p(context),
                 color: ceoPurpleGrey,

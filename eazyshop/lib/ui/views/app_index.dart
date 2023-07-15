@@ -15,6 +15,7 @@ import 'categories.dart';
 
 import 'home_view.dart';
 import 'profile_view.dart';
+import 'supercartview.dart';
 
 class AppIndex extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class AppIndexState extends State<AppIndex> {
         actions: [
           CartIcon(
             onPressed: () {
-              RouteController().push(context, CartScreen());
+              RouteController().push(context, SuperCartScreen());
             },
           )
         ],

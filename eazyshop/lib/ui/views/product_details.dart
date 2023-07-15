@@ -13,6 +13,7 @@ import '../../utils/router.dart';
 import '../components/ceo_product_row.dart';
 import '../components/username.dart';
 import 'cart_view.dart';
+import 'supercartview.dart';
 
 class ProductDetails extends StatefulWidget {
   const ProductDetails({Key? key}) : super(key: key);
@@ -27,12 +28,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final productViewmodel = Provider.of<ProductViewmodel>(context);
     CartViewmodel _cartViewmodel = Provider.of<CartViewmodel>(context);
+    // String vendorId = _cartViewmodel.currentVendor ?? "";
     return Scaffold(
         appBar: AppBar(
           actions: [
             CartIcon(
               onPressed: () {
-                RouteController().push(context, CartScreen());
+                RouteController().push(context, SuperCartScreen());
               },
             )
           ],
@@ -81,35 +83,40 @@ class _ProductDetailsState extends State<ProductDetails> {
                   margin: EdgeInsets.only(left: 10, right: 10, top: 12),
                   width: MediaQuery.of(context).size.width,
                   child: Row(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            productViewmodel.product!.productName!,
-                            style: TextStyle(
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              productViewmodel.product!.productName!,
+                              style: TextStyle(
                                 fontSize: TextSize().h3(context),
                                 fontWeight: FontWeight.w600,
-                                color: ceoPurple),
-                          ),
-                          Container(
-                            height: 5,
-                          ),
-                          Username(
-                            userId: productViewmodel.product?.sellerId,
-                          )
-                        ],
+                                color: ceoPurple,
+                              ),
+                            ),
+                            Container(
+                              height: 5,
+                            ),
+                            Username(
+                              userId: productViewmodel.product?.sellerId,
+                            ),
+                          ],
+                        ),
                       ),
-                      Expanded(child: Container()),
                       Text(
                         productViewmodel.product!.isFlash == false
                             ? formatter.format(productViewmodel.product!.price)
                             : formatter.format(
                                 productViewmodel.product!.discountPrice),
                         style: TextStyle(
-                            fontSize: TextSize().p(context),
-                            fontWeight: FontWeight.w500,
-                            color: ceoPurple),
+                          fontSize: TextSize().p(context),
+                          fontWeight: FontWeight.w500,
+                          color: ceoPurple,
+                        ),
                       ),
                     ],
                   ),
@@ -125,12 +132,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                         color: ceoPurpleGrey),
                   ),
                 ),
-                _cartViewmodel.isItemInCart(CartItem(
-                            name: productViewmodel.product!.productName ?? "",
-                            price: productViewmodel.product!.price!.toDouble(),
-                            imageUrl: "",
-                            shopName:
-                                productViewmodel.product!.sellerId ?? "")) ==
+                _cartViewmodel.isItemInCartForVendor(
+                            CartItem(
+                                name:
+                                    productViewmodel.product!.productName ?? "",
+                                price:
+                                    productViewmodel.product!.price!.toDouble(),
+                                imageUrl: "",
+                                shopId:
+                                    productViewmodel.product!.sellerId ?? ""),
+                            productViewmodel.product!.sellerId ?? "") ==
                         false
                     ? Container(
                         margin: EdgeInsets.only(left: 10, top: 20, bottom: 5),
@@ -141,14 +152,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         child: MaterialButton(
                           onPressed: () async {
-                            _cartViewmodel.addItem(CartItem(
-                                name:
-                                    productViewmodel.product!.productName ?? "",
-                                price:
-                                    productViewmodel.product!.price!.toDouble(),
-                                imageUrl: "",
-                                shopName:
-                                    productViewmodel.product!.sellerId ?? ""));
+                            _cartViewmodel.addItemToCartForVendor(
+                                CartItem(
+                                    name:
+                                        productViewmodel.product!.productName ??
+                                            "",
+                                    price: productViewmodel.product!.price!
+                                        .toDouble(),
+                                    imageUrl: "",
+                                    shopId:
+                                        productViewmodel.product!.sellerId ??
+                                            ""),
+                                productViewmodel.product!.sellerId ?? "");
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,29 +192,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                             icon: Icon(Icons.remove_circle),
                             onPressed: () {
                               // Decrease quantity logic
-                              _cartViewmodel.decreaseQuantity(CartItem(
-                                  name: productViewmodel.product!.productName ??
-                                      "",
-                                  price: productViewmodel.product!.price!
-                                      .toDouble(),
-                                  imageUrl: "",
-                                  shopName:
-                                      productViewmodel.product!.sellerId ??
-                                          ""));
+                              _cartViewmodel.decreaseQuantityForVendor(
+                                  CartItem(
+                                      name: productViewmodel
+                                              .product!.productName ??
+                                          "",
+                                      price: productViewmodel.product!.price!
+                                          .toDouble(),
+                                      imageUrl: "",
+                                      shopId:
+                                          productViewmodel.product!.sellerId ??
+                                              ""),
+                                  productViewmodel.product!.sellerId ?? "");
                             },
                           ),
                           Text(
                             _cartViewmodel
-                                .getQuantity(CartItem(
-                                    name:
-                                        productViewmodel.product!.productName ??
+                                .getQuantityForVendor(
+                                    CartItem(
+                                        name: productViewmodel
+                                                .product!.productName ??
                                             "",
-                                    price: productViewmodel.product!.price!
-                                        .toDouble(),
-                                    imageUrl: "",
-                                    shopName:
-                                        productViewmodel.product!.sellerId ??
-                                            ""))
+                                        price: productViewmodel.product!.price!
+                                            .toDouble(),
+                                        imageUrl: "",
+                                        shopId: productViewmodel
+                                                .product!.sellerId ??
+                                            ""),
+                                    productViewmodel.product!.sellerId ?? "")
                                 .toString(),
                             style: TextStyle(fontSize: 16),
                           ),
@@ -207,15 +227,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                             icon: Icon(Icons.add_circle),
                             onPressed: () {
                               // Increase quantity logic
-                              _cartViewmodel.increaseQuantity(CartItem(
-                                  name: productViewmodel.product!.productName ??
-                                      "",
-                                  price: productViewmodel.product!.price!
-                                      .toDouble(),
-                                  imageUrl: "",
-                                  shopName:
-                                      productViewmodel.product!.sellerId ??
-                                          ""));
+                              _cartViewmodel.increaseQuantityForVendor(
+                                  CartItem(
+                                      name: productViewmodel
+                                              .product!.productName ??
+                                          "",
+                                      price: productViewmodel.product!.price!
+                                          .toDouble(),
+                                      imageUrl: "",
+                                      shopId:
+                                          productViewmodel.product!.sellerId ??
+                                              ""),
+                                  productViewmodel.product!.sellerId ?? "");
                             },
                           ),
                         ],

@@ -70,7 +70,7 @@ class _CustomGridViewState extends State<CustomGridView> {
             } else {
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.6, crossAxisCount: 2),
+                      childAspectRatio: 0.5, crossAxisCount: 2),
                   itemCount: snapshot.data?.length,
                   itemBuilder: ((context, index) {
                     return ProductCard(

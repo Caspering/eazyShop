@@ -1,23 +1,72 @@
 [
     {
-        "id": "seller123",
-        "name": "ABC Electronics",
-        "logoUrl": "abc-electronics-logo.jpg",
+        "id": "s1",
+        "name": "Seller 1",
+        "logoUrl": "https://example.com/seller1-logo.jpg",
         "totalRating": 4,
-        "totalRaters": 250
+        "totalRaters": 10
     },
     {
-        "id": "seller456",
-        "name": "XYZ Fashion Store",
-        "logoUrl": "xyz-fashion-store-logo.jpg",
-        "totalRating": 4,
-        "totalRaters": 150
+        "id": "s2",
+        "name": "Seller 2",
+        "logoUrl": "https://example.com/seller2-logo.jpg",
+        "totalRating": 5,
+        "totalRaters": 20
     },
     {
-        "id": "seller789",
-        "name": "PQR Home Goods",
-        "logoUrl": "pqr-home-goods-logo.jpg",
-        "totalRating": 4.5,
-        "totalRaters": 200
+        "id": "s3",
+        "name": "Seller 3",
+        "logoUrl": "https://example.com/seller3-logo.jpg",
+        "totalRating": 3,
+        "totalRaters": 5
+    },
+    {
+        "id": "s4",
+        "name": "Seller 4",
+        "logoUrl": "https://example.com/seller4-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 15
+    },
+    {
+        "id": "s5",
+        "name": "Seller 5",
+        "logoUrl": "https://example.com/seller5-logo.jpg",
+        "totalRating": 2,
+        "totalRaters": 8
+    },
+    {
+        "id": "s6",
+        "name": "Seller 6",
+        "logoUrl": "https://example.com/seller6-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 12
+    },
+    {
+        "id": "s7",
+        "name": "Seller 7",
+        "logoUrl": "https://example.com/seller7-logo.jpg",
+        "totalRating": 3,
+        "totalRaters": 9
+    },
+    {
+        "id": "s8",
+        "name": "Seller 8",
+        "logoUrl": "https://example.com/seller8-logo.jpg",
+        "totalRating": 5,
+        "totalRaters": 25
+    },
+    {
+        "id": "s9",
+        "name": "Seller 9",
+        "logoUrl": "https://example.com/seller9-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 18
+    },
+    {
+        "id": "s10",
+        "name": "Seller 10",
+        "logoUrl": "https://example.com/seller10-logo.jpg",
+        "totalRating": 4,
+        "totalRaters": 14
     }
 ]
