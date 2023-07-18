@@ -39,7 +39,7 @@ class CustomListTile extends StatelessWidget {
                   children: [
                     if (title != null) title!,
                     Container(
-                      height: 10,
+                      height: 5,
                     ),
                     if (subtitle != null) subtitle!,
                   ],

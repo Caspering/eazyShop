@@ -24,7 +24,13 @@ class AppIndex extends StatefulWidget {
 
 class AppIndexState extends State<AppIndex> {
   int currentIndex = 0;
-  List children = [Home(), CategoriesView(), ProfileView()];
+  List children = [
+    Home(),
+    CategoriesView(),
+    ProfileView(),
+    Container(),
+    Container()
+  ];
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
@@ -44,8 +50,10 @@ class AppIndexState extends State<AppIndex> {
                     color: ceoPurple, fontSize: TextSize().h2(context)),
               )
             : null,
-        leading:
-            currentIndex < 3 && authService.authState == true ? Avatar() : null,
+        leading: Icon(
+          Icons.menu,
+          color: ceoPurple,
+        ),
         backgroundColor: ceoWhite,
         elevation: 0.0,
       ),
@@ -64,21 +72,33 @@ class AppIndexState extends State<AppIndex> {
           // ignore: prefer_const_literals_to_create_immutables
           items: [
             BottomNavigationBarItem(
-                label: "",
+                label: "Home",
                 icon: Icon(
-                  Icons.home_outlined,
+                  Icons.home,
                   size: 20,
                 )),
             BottomNavigationBarItem(
                 label: "",
                 icon: Icon(
-                  Icons.category_outlined,
+                  Icons.delivery_dining,
                   size: 20,
                 )),
             BottomNavigationBarItem(
                 label: "",
                 icon: Icon(
-                  Icons.person_outline_outlined,
+                  Icons.book,
+                  size: 20,
+                )),
+            BottomNavigationBarItem(
+                label: "",
+                icon: Icon(
+                  Icons.label,
+                  size: 20,
+                )),
+            BottomNavigationBarItem(
+                label: "",
+                icon: Icon(
+                  Icons.receipt,
                   size: 20,
                 ))
           ],

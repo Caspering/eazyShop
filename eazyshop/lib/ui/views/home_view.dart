@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:eazyshop/ui/components/random_categories_grid.dart';
+import 'package:eazyshop/ui/components/seller_grid.dart';
 import 'package:eazyshop/ui/components/shops_list_view.dart';
 import 'package:eazyshop/utils/font_size.dart';
 import 'package:flutter/material.dart';
@@ -20,29 +22,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
       padding: EdgeInsets.all(10),
       color: ceoWhite,
-      child: SingleChildScrollView(
-          child: Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Stores around you",
-              style: TextStyle(
-                  fontSize: TextSize().h1(context),
-                  color: ceoPurple,
-                  fontWeight: FontWeight.w600),
-            ),
-            Container(
-              height: 5,
-            ),
-            Expanded(child: ShopList())
-          ],
-        ),
-      )),
+      child: ListView(
+        children: [SellerGrid(), RandomCatGrid(), ShopList()],
+      ),
     );
   }
 }

@@ -38,15 +38,32 @@ class _ShopListState extends State<ShopList> {
             if (snapshot.data!.isEmpty) {
               return Empty();
             } else {
-              return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: snapshot.data?.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        margin: EdgeInsets.all(10),
-                        child: CustomListTile(
-                          onTap: () {
-                            RouteController().push(
+              List moreShops = snapshot.data!.take(6).toList();
+              return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 5,
+                    ),
+                    Text(
+                      "More Stores",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: TextSize().h2(
+                            context,
+                          ),
+                          color: ceoPurple),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        moreShops.length,
+                        (index) => Container(
+                          margin: EdgeInsets.all(10),
+                          child: CustomListTile(
+                            contentPadding: EdgeInsets.zero,
+                            onTap: () {
+                              RouteController().push(
                                 context,
                                 CustomGridView(
                                   gridCategory: snapshot.data?[index].name,
@@ -58,38 +75,49 @@ class _ShopListState extends State<ShopList> {
                                   ),
                                   categoryProducts: productViewmodel
                                       .getCeoProducts(snapshot.data?[index].id),
-                                ));
-                          },
-                          title: Text(
-                            snapshot.data?[index].name ?? "",
-                            style: TextStyle(
+                                ),
+                              );
+                            },
+                            title: Text(
+                              snapshot.data?[index].name ?? "",
+                              style: TextStyle(
                                 fontSize: TextSize().h3(context),
                                 fontWeight: FontWeight.w500,
-                                color: ceoPurple),
-                          ),
-                          subtitle: Text(
-                            "Deliveries by 11pm today",
-                            style: TextStyle(
-                                fontSize: TextSize().p(context),
-                                fontWeight: FontWeight.w500,
-                                color: ceoPurpleGrey),
-                          ),
-                          leading: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                'assets/euekjcgbe0dvisaiaave.png',
-                                fit: BoxFit.cover,
+                                color: ceoPurple,
                               ),
                             ),
+                            subtitle: Text(
+                              "Deliveries by 11pm today",
+                              style: TextStyle(
+                                fontSize: TextSize().p(context),
+                                fontWeight: FontWeight.w400,
+                                color: ceoPurpleGrey,
+                              ),
+                            ),
+                            leading: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40),
+                                  border: Border.all(color: greyOne!)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(40),
+                                child: Image.asset(
+                                  'assets/euekjcgbe0dvisaiaave.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ceoPurpleGrey,
+                              size: TextSize().h3(context),
+                            ),
                           ),
-                        ));
-                  });
+                        ),
+                      ),
+                    )
+                  ]);
             }
           } else {
             return Container();
