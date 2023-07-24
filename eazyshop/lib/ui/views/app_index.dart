@@ -40,7 +40,7 @@ class AppIndexState extends State<AppIndex> {
         backdrop: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(color: ceoPink),
+          decoration: BoxDecoration(color: greyOne),
         ),
         controller: _advancedDrawerController,
         animationCurve: Curves.easeInOut,
@@ -77,9 +77,21 @@ class AppIndexState extends State<AppIndex> {
                         color: ceoPurple, fontSize: TextSize().h2(context)),
                   )
                 : null,
-            leading: Icon(
-              Icons.menu,
-              color: ceoPurple,
+            leading: IconButton(
+              onPressed: _handleMenuButtonPressed,
+              icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                valueListenable: _advancedDrawerController,
+                builder: (_, value, __) {
+                  return AnimatedSwitcher(
+                    duration: Duration(milliseconds: 300),
+                    child: Icon(
+                      value.visible ? Icons.clear : Icons.menu,
+                      color: ceoPurple,
+                      key: ValueKey<bool>(value.visible),
+                    ),
+                  );
+                },
+              ),
             ),
             backgroundColor: ceoWhite,
             elevation: 0.0,
@@ -134,7 +146,10 @@ class AppIndexState extends State<AppIndex> {
           ),
           body: children[currentIndex],
         ),
-        drawer: Container());
+        drawer: Container(
+          height: MediaQuery.of(context).size.height,
+          width: 500,
+        ));
   }
 
   void _handleMenuButtonPressed() {

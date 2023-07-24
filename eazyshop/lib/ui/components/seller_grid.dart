@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:eazyshop/core/models/seller_model.dart';
+import 'package:eazyshop/ui/components/cart_icon.dart';
+import 'package:eazyshop/ui/components/custom_grid_view.dart';
+import 'package:eazyshop/ui/views/current_shop_index.dart';
+import 'package:eazyshop/ui/views/supercartview.dart';
 import 'package:eazyshop/utils/color.dart';
+import 'package:eazyshop/utils/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/viewmodels/cart_viewmodel.dart';
@@ -42,22 +47,30 @@ class _SellerGridState extends State<SellerGrid> {
                     crossAxisCount: 4),
                 itemBuilder: (context, index) {
                   if (index < 7) {
-                    return Column(
-                      children: [
-                        Container(
-                          height: 60,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/euekjcgbe0dvisaiaave.png')),
-                              color: ceoWhite,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: greyOne!)),
-                        ),
-                        Text(sellers[index].name ?? "")
-                      ],
-                    );
+                    return GestureDetector(
+                        onTap: () {
+                          sellerViewmodel.setSeller(sellers[index]);
+                          RouteController().push(
+                              context,
+                              RouteController()
+                                  .push(context, CurrentShopIndex()));
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'assets/euekjcgbe0dvisaiaave.png')),
+                                  color: ceoWhite,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: greyOne!)),
+                            ),
+                            Text(sellers[index].name ?? "")
+                          ],
+                        ));
                   } else {
                     return IconButton(
                         onPressed: () {}, icon: Icon(Icons.arrow_forward));
