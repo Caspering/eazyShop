@@ -9,5 +9,14 @@ List<String> categories = [
   "Grocery",
   "Gifts",
   "Educational",
-  "Kitchen"
+  "Kitchen",
+  "Pets",
+  "Snacks and candy",
+  "Wine",
+  "Liquor",
+  "Meat and Seafood",
+  "Small appliances",
+  "Produce",
+  "Pantry",
+  "Beverages"
 ];

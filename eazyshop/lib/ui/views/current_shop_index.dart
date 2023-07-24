@@ -27,7 +27,6 @@ class CurrentShopIndex extends StatefulWidget {
 class _CurrentShopIndexState extends State<CurrentShopIndex> {
   final _advancedDrawerController = AdvancedDrawerController();
   bool? isDrawer;
-  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +47,7 @@ class _CurrentShopIndexState extends State<CurrentShopIndex> {
         animationDuration: const Duration(milliseconds: 250),
         animateChildDecoration: true,
         rtlOpening: false,
+        openRatio: 0.5,
         // openScale: 1.0,
         disabledGestures: false,
         childDecoration: const BoxDecoration(
@@ -111,11 +111,5 @@ class _CurrentShopIndexState extends State<CurrentShopIndex> {
     } else {
       _advancedDrawerController.hideDrawer();
     }
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      currentIndex = index;
-    });
   }
 }

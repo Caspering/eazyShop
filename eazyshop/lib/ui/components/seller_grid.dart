@@ -50,10 +50,7 @@ class _SellerGridState extends State<SellerGrid> {
                     return GestureDetector(
                         onTap: () {
                           sellerViewmodel.setSeller(sellers[index]);
-                          RouteController().push(
-                              context,
-                              RouteController()
-                                  .push(context, CurrentShopIndex()));
+                          RouteController().push(context, CurrentShopIndex());
                         },
                         child: Column(
                           children: [
