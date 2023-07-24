@@ -1,3 +1,4 @@
+import 'package:eazyshop/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,10 @@ class _CurrentStoreFeedState extends State<CurrentStoreFeed> {
     final userViewModel = Provider.of<UserViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
     final sellerViewmodel = Provider.of<SellerViewmodel>(context);
-    return Container();
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      color: ceoWhite,
+    );
   }
 }

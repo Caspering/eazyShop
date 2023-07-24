@@ -70,7 +70,7 @@ class _CurrentShopDrawerState extends State<CurrentShopDrawer> {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(
-                      "View privacy policy",
+                      "View pricing policy",
                       style: TextStyle(
                           fontSize: TextSize().p(context),
                           color: grey,
