@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/services/authentication.dart';
 import '../../core/viewmodels/product_viewmodel.dart';
+import '../../core/viewmodels/seller_viewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/color.dart';
 import '../../utils/font_size.dart';
@@ -25,7 +26,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
-    final userViewModel = Provider.of<UserViewmodel>(context);
+    final userViewModel = Provider.of<SellerViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
     return Scaffold(
         appBar: AppBar(
@@ -99,11 +100,11 @@ class _SettingsState extends State<Settings> {
                   child: ListTile(
                     onTap: () {
                       userViewModel
-                          .setFirstname(userViewModel.currentCeo?.firstname);
+                          .setFirstname(userViewModel.currentSeller?.firstname);
                       userViewModel
-                          .setLastname(userViewModel.currentCeo?.lastname);
+                          .setLastname(userViewModel.currentSeller?.lastname);
                       userViewModel
-                          .setUsername(userViewModel.currentCeo?.username);
+                          .setUsername(userViewModel.currentSeller?.name);
 
                       RouteController().push(context, FullnameEdit());
                     },
@@ -137,13 +138,13 @@ class _SettingsState extends State<Settings> {
                   child: ListTile(
                     onTap: () {
                       userViewModel.setInstagramLink(
-                          userViewModel.currentCeo?.instagramLink);
+                          userViewModel.currentSeller?.instagramLink);
                       userViewModel.setTwitterLink(
-                          userViewModel.currentCeo?.twitterLink);
+                          userViewModel.currentSeller?.twitterLink);
                       userViewModel.setWhatsappLink(
-                          userViewModel.currentCeo?.whatsappLink);
+                          userViewModel.currentSeller?.whatsappLink);
                       userViewModel.setPhoneNumber(
-                          userViewModel.currentCeo?.phoneNumber);
+                          userViewModel.currentSeller?.phoneNumber);
                       RouteController().push(context, SocialsEdit());
                     },
                     contentPadding: EdgeInsets.zero,

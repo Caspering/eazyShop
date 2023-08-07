@@ -70,7 +70,7 @@ class ProfilePictureState extends State<ProfilePicture> {
               Container(
                 margin: EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  "Add a profile picture",
+                  "Add a store logo",
                   style: TextStyle(
                       color: ceoPurple,
                       fontWeight: FontWeight.w500,
@@ -80,7 +80,7 @@ class ProfilePictureState extends State<ProfilePicture> {
               Container(
                 margin: EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  "${sellerViewModel.firstname} please add a profile picture 📸",
+                  "${sellerViewModel.firstname} add a logo for ${sellerViewModel.username}",
                   style: TextStyle(
                       color: ceoPurpleGrey, fontSize: TextSize().h3(context)),
                 ),
@@ -132,6 +132,8 @@ class ProfilePictureState extends State<ProfilePicture> {
                               RouteController().pop(context);
                               RouteController().push(context, Socials());
                               print(sellerViewModel.imageUrl);
+                            }).catchError((e) {
+                              PopUp().showError(e.message, context);
                             });
                           } else {
                             RouteController().push(context, Socials());

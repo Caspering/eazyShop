@@ -119,8 +119,8 @@ class RegisterViewState extends State<RegisterView> {
                                 print(e);
                                 if (e.message ==
                                     "The email address is already in use by another account.") {
-                                  RouteController()
-                                      .pushAndRemoveUntil(context, Fullname());
+                                  PopUp().showError(
+                                      "Email already in use", context);
                                 } else {
                                   PopUp().showError(e.message, context);
                                   _passwordField.clear();

@@ -20,8 +20,10 @@ class Fullname extends StatefulWidget {
 class FullnameState extends State<Fullname> {
   TextEditingController _firstName = TextEditingController();
   TextEditingController _lastName = TextEditingController();
+  TextEditingController _storeName = TextEditingController();
   bool? isFname;
   bool? isLname;
+  bool? isSname;
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
@@ -63,7 +65,7 @@ class FullnameState extends State<Fullname> {
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 10),
                     child: Text(
-                      "Please enter your first and last name",
+                      "Please enter your name and store name",
                       style: TextStyle(
                           color: ceoPurpleGrey,
                           fontSize: TextSize().h3(context)),
@@ -74,7 +76,7 @@ class FullnameState extends State<Fullname> {
                           margin: EdgeInsets.only(top: 15),
                           child: CustomTextField(
                             onChanged: (String text) {
-                              if (text.length > 3) {
+                              if (text.length > 2) {
                                 setState(() {
                                   isFname = true;
                                 });
@@ -86,7 +88,7 @@ class FullnameState extends State<Fullname> {
                             },
                             hintText: "First name",
                             errorText: isFname == false
-                                ? "first name must be more than 3 characters"
+                                ? "first name must be more than 2 characters"
                                 : null,
                             controller: _firstName,
                             // prefix: Icons.person_outline_rounded,
@@ -96,7 +98,7 @@ class FullnameState extends State<Fullname> {
                           // margin: EdgeInsets.only(top),
                           child: CustomTextField(
                     onChanged: (String text) {
-                      if (text.length > 3) {
+                      if (text.length > 2) {
                         setState(() {
                           isLname = true;
                         });
@@ -108,12 +110,34 @@ class FullnameState extends State<Fullname> {
                     },
 
                     errorText: isLname == false
-                        ? "last name must be more than 3 characters"
+                        ? "last name must be more than 2 characters"
                         : null,
                     hintText: "Last name",
                     controller: _lastName,
                     // prefix: Icons.person_outline_rounded,
                   ))),
+                  Center(
+                      child: Container(
+                          margin: EdgeInsets.only(top: 15),
+                          child: CustomTextField(
+                            onChanged: (String text) {
+                              if (text.length >= 3) {
+                                setState(() {
+                                  isSname = true;
+                                });
+                              } else {
+                                setState(() {
+                                  isSname = false;
+                                });
+                              }
+                            },
+                            hintText: "Store Name",
+                            errorText: isSname == false
+                                ? "store name must be more than 2 characters"
+                                : null,
+                            controller: _storeName,
+                            // prefix: Icons.person_outline_rounded,
+                          ))),
                   Expanded(child: Container()),
                   Center(
                       child: Container(
@@ -125,10 +149,13 @@ class FullnameState extends State<Fullname> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: MaterialButton(
-                      onPressed: isFname == true && isLname == true
+                      onPressed: isFname == true &&
+                              isLname == true &&
+                              isSname == true
                           ? () {
                               sellerViewModel.setFirstname(_firstName.text);
                               sellerViewModel.setLastname(_lastName.text);
+                              sellerViewModel.setUsername(_storeName.text);
                               RouteController().push(context, ProfilePicture());
                               print(sellerViewModel.firstname);
                             }

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easystore/core/models/seller_model.dart';
+import 'package:easystore/core/viewmodels/seller_viewmodel.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +12,14 @@ import '../../core/viewmodels/product_viewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/color.dart';
 import '../../utils/font_size.dart';
+import '../../utils/router.dart';
+import '../components/ceo_product_custom_grid.dart';
+import '../shared/action_box.dart';
+import '../shared/popup.dart';
+import '../shared/text_icon_button.dart';
 import 'add_flash.dart';
+import 'add_product.dart';
+import 'settings_view.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -21,16 +30,16 @@ class ProfileState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
-    final userViewModel = Provider.of<UserViewmodel>(context);
+    final userViewModel = Provider.of<SellerViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
     return DefaultTabController(
         length: 2,
         child: Scaffold(
           body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            color: ceoWhite,
-            /*  child: FutureBuilder<Ceo>(
+              height: double.infinity,
+              width: double.infinity,
+              color: ceoWhite,
+              child: FutureBuilder<Seller>(
                 future: userViewModel.getCeoById(authService.userId),
                 builder: ((context, snapshot) {
                   if (snapshot.hasData) {
@@ -44,13 +53,13 @@ class ProfileState extends State<ProfileView> {
                               child: CircleAvatar(
                                 radius: 30,
                                 backgroundImage: NetworkImage(
-                                    snapshot.data!.imageUrl.toString()),
+                                    snapshot.data!.logoUrl.toString()),
                               )),
                           Container(
                             margin: EdgeInsets.only(top: 7, left: 7),
                             width: MediaQuery.of(context).size.width,
                             child: Text(
-                              '${snapshot.data?.firstname} ${snapshot.data?.lastname}',
+                              '${snapshot.data?.name}',
                               // textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
@@ -62,69 +71,15 @@ class ProfileState extends State<ProfileView> {
                               padding: EdgeInsets.only(
                                   left: 7, right: 0, top: 5, bottom: 3),
                               child: Text(
-                                '${snapshot.data?.username}💰',
+                                '${snapshot.data?.name}💰',
                                 // textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: TextSize().custom(11, context),
                                     color: ceoPurpleGrey),
                               )),
                           Container(
-                              margin: EdgeInsets.only(top: 7, left: 7),
-                              width: MediaQuery.of(context).size.width,
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        if (snapshot.data!.ceoScore! > 50) {
-                                          PopUp().showScore(
-                                              "You are a baller. You can keep balling by adding products and selling more.",
-                                              context,
-                                              "assets/undraw_dua_lipa_ixam copy.png",
-                                              "Your ceo score is ${snapshot.data?.ceoScore}🎉");
-                                        } else {
-                                          PopUp().showScore(
-                                              "You are a mechanic. You can become a baller by adding products and selling more.",
-                                              context,
-                                              "assets/undraw_stepping_up_g6oo copy.png",
-                                              "Your ceo score is ${snapshot.data?.ceoScore}☹️");
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10,
-                                            right: 10,
-                                            top: 0,
-                                            bottom: 3),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border:
-                                                Border.all(color: greyOne!)),
-                                        child: Text(
-                                          '🧑🏿‍💼: ${snapshot.data?.ceoScore}',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: TextSize()
-                                                  .custom(11, context),
-                                              color: ceoBlack),
-                                        ),
-                                      )),
-                                  Container(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        left: 0, top: 0, bottom: 3),
-                                    child: Text(
-                                        '${snapshot.data!.subscribers!.length.toString()} subscribers',
-                                        style: TextStyle(
-                                            fontSize:
-                                                TextSize().custom(11, context),
-                                            fontWeight: FontWeight.w600,
-                                            color: ceoPurple)),
-                                  ),
-                                ],
-                              )),
+                            width: 10,
+                          ),
                           Container(
                             margin: EdgeInsets.only(top: 5),
                             padding: EdgeInsets.all(3),
@@ -168,8 +123,8 @@ class ProfileState extends State<ProfileView> {
                                   ),
                                   TextIcon(
                                     onPressed: () {
-                                      userViewModel.setCeo(snapshot.data!);
-                                      print(userViewModel.currentCeo?.id);
+                                      userViewModel.setSeller(snapshot.data!);
+                                      print(userViewModel.currentSeller?.id);
                                       RouteController()
                                           .push(context, Settings());
                                     },
@@ -243,7 +198,7 @@ class ProfileState extends State<ProfileView> {
                                   onTapped: () {
                                     RouteController().push(
                                         context,
-                                        CustomGridView(
+                                        CeoCustomGrid(
                                           categoryProducts: productViewmodel
                                               .getSubscribedItems(
                                                   authService.userId),
@@ -288,8 +243,7 @@ class ProfileState extends State<ProfileView> {
                     return Container();
                   }
                 }),
-              )*/
-          ),
+              )),
         ));
   }
 }

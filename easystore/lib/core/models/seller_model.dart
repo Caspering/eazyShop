@@ -4,20 +4,37 @@ class Seller {
   String? logoUrl;
   int totalRating;
   int totalRaters;
-  Seller(
-      {this.id,
-      this.logoUrl,
-      this.name,
-      required this.totalRaters,
-      required this.totalRating});
+  String? firstname;
+  String? lastname;
+  String? phoneNumber;
+  String? instagramLink;
+  String? whatsappLink;
+  String? twitterLink;
+  String? bio;
+  List? subscribers;
+  Seller({
+    this.id,
+    this.logoUrl,
+    this.name,
+    required this.totalRaters,
+    required this.totalRating,
+    this.bio,
+    this.firstname,
+    this.instagramLink,
+    this.lastname,
+    this.phoneNumber,
+    this.twitterLink,
+    this.subscribers,
+    this.whatsappLink,
+  });
 
   double get rating => totalRating / totalRaters;
 
   Seller.fromMap(Map snapshot, this.id)
       : name = snapshot['name'],
         logoUrl = snapshot['logoUrl'],
-        totalRating = snapshot['totalRating'],
-        totalRaters = snapshot['totalRaters'];
+        totalRating = snapshot['totalRating'] ?? 0,
+        totalRaters = snapshot['totalRaters'] ?? 0;
   toJson() {
     return {
       "name": name,

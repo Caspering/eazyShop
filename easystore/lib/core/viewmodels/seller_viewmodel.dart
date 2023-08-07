@@ -93,7 +93,7 @@ class SellerViewmodel extends ChangeNotifier {
     }
   }
 
-  Future addUser(Users data, uid) async {
+  Future addUser(Seller data, uid) async {
     // Updated class name
     var result = await _api.setData(data.toJson(), uid);
     return result;

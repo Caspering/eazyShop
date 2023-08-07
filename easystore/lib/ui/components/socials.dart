@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:easystore/core/models/seller_model.dart';
+import 'package:easystore/core/viewmodels/seller_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +29,7 @@ class SocialsState extends State<Socials> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
-    final userViewModel = Provider.of<UserViewmodel>(context);
+    final userViewModel = Provider.of<SellerViewmodel>(context);
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -75,7 +77,7 @@ class SocialsState extends State<Socials> {
                           Container(
                             margin: EdgeInsets.only(left: 10, top: 10),
                             child: Text(
-                              "Add phone number and social media links to enable buyers contact you",
+                              "Add phone number and social media links",
                               style: TextStyle(
                                   color: ceoPurpleGrey,
                                   fontSize: TextSize().h3(context)),
@@ -151,9 +153,8 @@ class SocialsState extends State<Socials> {
                                           .setWhatsappLink(_walink.text);
                                       userViewModel
                                           .addUser(
-                                              Users(
+                                              Seller(
                                                   subscribers: [],
-                                                  ceoScore: 0,
                                                   whatsappLink: userViewModel
                                                       .whatsappLink,
                                                   twitterLink:
@@ -166,10 +167,12 @@ class SocialsState extends State<Socials> {
                                                       userViewModel.firstname,
                                                   lastname:
                                                       userViewModel.lastname,
-                                                  imageUrl:
+                                                  logoUrl:
                                                       userViewModel.imageUrl,
-                                                  username:
-                                                      "@${userViewModel.firstname?.toLowerCase()}"),
+                                                  totalRaters: 0,
+                                                  totalRating: 0,
+                                                  bio: "",
+                                                  name: userViewModel.username),
                                               authService.userId)
                                           .then((value) {
                                         RouteController().pushAndRemoveUntil(

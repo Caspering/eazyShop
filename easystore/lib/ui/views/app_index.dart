@@ -20,7 +20,7 @@ class AppIndexState extends State<AppIndex> {
   final _advancedDrawerController = AdvancedDrawerController();
   bool? isDrawer;
   int currentIndex = 0;
-  List children = [CategoriesView(), ProfileView(), Container(), Container()];
+  List children = [Container(), Container(), Container(), ProfileView()];
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
@@ -64,15 +64,9 @@ class AppIndexState extends State<AppIndex> {
             BottomNavigationBarItem(
                 label: "",
                 icon: Icon(
-                  Icons.label,
+                  Icons.person,
                   size: 20,
                 )),
-            BottomNavigationBarItem(
-                label: "",
-                icon: Icon(
-                  Icons.receipt,
-                  size: 20,
-                ))
           ],
           onTap: onTabTapped,
         ),
