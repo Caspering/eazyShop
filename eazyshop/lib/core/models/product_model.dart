@@ -9,6 +9,7 @@ class Product {
   final bool? isDiscounted;
   final String? productImage;
   final String? category;
+  final String? barcode;
 
   Product(
       {this.dateAdded,
@@ -19,6 +20,7 @@ class Product {
       this.price,
       this.productImage,
       this.productName,
+      this.barcode,
       this.category,
       this.sellerId});
   Product.fromMap(Map snapshot, this.id)
@@ -30,6 +32,7 @@ class Product {
         productImage = snapshot['productImage'],
         productName = snapshot['productName'],
         category = snapshot['category'],
+        barcode = snapshot['barcode'],
         sellerId = snapshot['sellerId'];
   toJson() {
     return {
@@ -38,6 +41,7 @@ class Product {
       "discountPrice": discountPrice,
       "isDiscounted": isDiscounted,
       "price": price,
+      'barcode': barcode,
       "productImage": productImage,
       "productName": productName,
       "category": category,
