@@ -1,6 +1,9 @@
 import 'package:eazyshop/core/viewmodels/cart_viewmodel.dart';
+import 'package:eazyshop/core/viewmodels/checkout_viewmodel.dart';
+import 'package:eazyshop/core/viewmodels/delivery_viewmodel.dart';
 import 'package:eazyshop/core/viewmodels/order_viewmodel.dart';
 import 'package:eazyshop/core/viewmodels/seller_viewmodel.dart';
+import 'package:eazyshop/core/viewmodels/store_baseviewmodel.dart';
 import 'package:eazyshop/ui/components/onbaording_one.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,6 +26,8 @@ UserViewmodel _userViewmodel = UserViewmodel();
 ProductViewmodel _productViewmodel = ProductViewmodel();
 CartViewmodel _cartViewmodel = CartViewmodel();
 SellerViewmodel _sellerViewmodel = SellerViewmodel();
+StoreBaseViewmodel _storeBaseViewmodel = StoreBaseViewmodel();
+DeliveryViewmodel _deliveryViewmodel = DeliveryViewmodel();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -52,6 +57,12 @@ class _MyAppState extends State<MyApp> {
           }),
           ChangeNotifierProvider(create: (_) {
             return _sellerViewmodel;
+          }),
+          ChangeNotifierProvider(create: (_) {
+            return _storeBaseViewmodel;
+          }),
+          ChangeNotifierProvider(create: (_) {
+            return _deliveryViewmodel;
           })
         ],
         child: MaterialApp(

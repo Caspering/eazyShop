@@ -10,7 +10,6 @@ import '../../core/viewmodels/product_viewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/color.dart';
 import '../../utils/font_size.dart';
-import 'add_flash.dart';
 
 class ProfileView extends StatefulWidget {
   @override

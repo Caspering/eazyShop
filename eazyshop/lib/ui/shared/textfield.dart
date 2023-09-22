@@ -65,7 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           enabled: widget.isEnabled,
           decoration: InputDecoration(
             filled: true,
-            fillColor: greyOne,
+            fillColor: ceoWhite,
             prefixIcon: widget.prefix != null
                 ? Icon(
                     widget.prefix,
@@ -83,17 +83,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 fontSize: TextSize().p(context),
                 fontWeight: FontWeight.w500),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(width: 2.5, color: greyOne!)),
+                borderSide: BorderSide(width: 1, color: ceoBlack)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(width: 2, color: greyOne!)),
+                borderSide: BorderSide(width: 1, color: ceoBlack)),
             focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(width: 2, color: greyOne!)),
+                borderSide: BorderSide(width: 1, color: ceoBlack)),
             errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(width: 2, color: greyOne!)),
+                borderSide: BorderSide(width: 1, color: ceoBlack)),
             errorText: widget.errorText,
           ),
           obscureText: widget.obscureText == null ? false : true,

@@ -46,7 +46,7 @@ class _CeoProductsState extends State<CeoProducts> {
                         child: Row(
                           children: [
                             Text(
-                              "More by this vendor",
+                              "More from this store",
                               style: TextStyle(
                                   color: ceoPurple,
                                   fontSize: TextSize().h3(context),
@@ -83,9 +83,7 @@ class _CeoProductsState extends State<CeoProducts> {
                                         .push(context, ProductDetails());
                                     productViewmodel.setCurrentProduct(item);
                                   },
-                                  price: item.price,
-                                  url: item.productImage,
-                                  productName: item.productName,
+                                  product: item,
                                 );
                               }).toList() ??
                               [],

@@ -117,6 +117,17 @@ class ProductViewmodel extends ChangeNotifier {
     return categoryProducts;
   }
 
+  Future<List<Product>> getCategoryProdStore(category, sellerId) async {
+    var result = await _api.queryWhereEqualTox2(
+        sellerId, "sellerId", category, "category");
+    categoryProducts = result.docs
+        .map((doc) =>
+            Product.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    return categoryProducts.take(6).toList();
+  }
+
   Future<List<Product>> getFlashSales() async {
     var result = await _api.getRecentDocs();
     flashes = result.docs

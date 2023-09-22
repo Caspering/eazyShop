@@ -261,7 +261,7 @@ class PopUp {
                               image: DecorationImage(
                                   fit: BoxFit.contain,
                                   image: AssetImage(
-                                      'assets/undraw_dua_lipa_ixam copy.png')))),
+                                      'assets/undraw_Successful_purchase_re_mpig.png')))),
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: Text(

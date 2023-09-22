@@ -44,15 +44,6 @@ class _CustomGridViewState extends State<CustomGridView> {
         ),
         actions: [widget.action ?? Container()],
         backgroundColor: ceoWhite,
-        leading: IconButton(
-          onPressed: () {
-            RouteController().pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: ceoPurple,
-          ),
-        ),
       ),
       body: Container(
         height: double.infinity,
@@ -70,19 +61,16 @@ class _CustomGridViewState extends State<CustomGridView> {
             } else {
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 0.5, crossAxisCount: 2),
+                      childAspectRatio: 0.65, crossAxisCount: 2),
                   itemCount: snapshot.data?.length,
                   itemBuilder: ((context, index) {
                     return ProductCard(
-                      onTapped: () {
-                        productViewmodel
-                            .setCurrentProduct(snapshot.data?[index]);
-                        RouteController().push(context, ProductDetails());
-                      },
-                      price: snapshot.data?[index].price,
-                      productName: snapshot.data?[index].productName,
-                      url: snapshot.data?[index].productImage,
-                    );
+                        onTapped: () {
+                          productViewmodel
+                              .setCurrentProduct(snapshot.data?[index]);
+                          RouteController().push(context, ProductDetails());
+                        },
+                        product: snapshot.data![index]);
                   }));
             }
           },

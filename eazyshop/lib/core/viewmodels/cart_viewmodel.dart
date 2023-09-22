@@ -40,13 +40,13 @@ class CartViewmodel extends ChangeNotifier {
 
   double getCartTaxForVendor(String vendorId) {
     final subtotal = getCartSubtotalForVendor(vendorId);
-    return subtotal * 0.1;
+    return subtotal.ceil() * 0.1;
   }
 
   double getCartTotalForVendor(String vendorId) {
     final subtotal = getCartSubtotalForVendor(vendorId);
     final tax = getCartTaxForVendor(vendorId);
-    return subtotal + tax;
+    return subtotal + tax.ceil();
   }
 
   Future<void> addItemToCartForVendor(CartItem item, String vendorId) async {

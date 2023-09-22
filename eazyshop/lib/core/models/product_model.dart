@@ -5,7 +5,6 @@ class Product {
   dynamic dateAdded;
   final String? productName;
   final int? price;
-  final bool? isFlash;
   final int? discountPrice;
   final bool? isDiscounted;
   final String? productImage;
@@ -17,7 +16,6 @@ class Product {
       this.discountPrice,
       this.id,
       this.isDiscounted,
-      this.isFlash,
       this.price,
       this.productImage,
       this.productName,
@@ -28,7 +26,6 @@ class Product {
         description = snapshot['description'],
         discountPrice = snapshot['discountPrice'],
         isDiscounted = snapshot['isDiscounted'],
-        isFlash = snapshot['isFlash'],
         price = snapshot['price'],
         productImage = snapshot['productImage'],
         productName = snapshot['productName'],
@@ -40,7 +37,6 @@ class Product {
       "description": description,
       "discountPrice": discountPrice,
       "isDiscounted": isDiscounted,
-      "isFlash": isFlash,
       "price": price,
       "productImage": productImage,
       "productName": productName,

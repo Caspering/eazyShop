@@ -67,7 +67,7 @@ class OnboardingTwoState extends State<OnboardingTwo> {
                   margin: EdgeInsets.only(left: 15, top: 7),
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    "Welcome to eazyShop\nYou can get the best deal here",
+                    "Welcome to eazycart\nYou can get the best deal here",
                     //textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.w600,

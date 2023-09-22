@@ -1,3 +1,4 @@
+import 'package:eazyshop/core/viewmodels/seller_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,9 +33,11 @@ class _CustomRowState extends State<CustomRow> {
     final authService = Provider.of<AuthenticationService>(context);
     final userViewModel = Provider.of<UserViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
+    final sellerViewmodel = Provider.of<SellerViewmodel>(context);
     return Container(
       child: FutureBuilder<List<Product>>(
-        future: productViewmodel.getCategoryProd(widget.category),
+        future: productViewmodel.getCategoryProdStore(
+            widget.category, sellerViewmodel.currentSeller?.id ?? ""),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data?.length != 0) {
             return Container(
@@ -87,9 +90,7 @@ class _CustomRowState extends State<CustomRow> {
                                 productViewmodel
                                     .setCurrentProduct(snapshot.data?[index]);
                               },
-                              price: snapshot.data?[index].price,
-                              url: snapshot.data?[index].productImage,
-                              productName: snapshot.data?[index].productName,
+                              product: snapshot.data![index],
                             ),
                           ),
                         ),

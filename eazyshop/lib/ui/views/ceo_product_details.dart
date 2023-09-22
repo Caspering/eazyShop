@@ -95,10 +95,7 @@ class _CeoProductDetailsState extends State<CeoProductDetails> {
                       ),
                       Expanded(child: Container()),
                       Text(
-                        productViewmodel.product!.isFlash == false
-                            ? formatter.format(productViewmodel.product!.price)
-                            : formatter.format(
-                                productViewmodel.product!.discountPrice),
+                        formatter.format(productViewmodel.product!.price),
                         style: TextStyle(
                             fontSize: TextSize().p(context),
                             fontWeight: FontWeight.w500,
@@ -133,9 +130,7 @@ class _CeoProductDetailsState extends State<CeoProductDetails> {
                           "Do you really want to delete?", context, () async {
                         await productViewmodel.deleteProduct(
                             productViewmodel.product?.id,
-                            productViewmodel.product?.isFlash == true
-                                ? productViewmodel.ceoFlash
-                                : productViewmodel.ceoProducts,
+                            productViewmodel.ceoProducts,
                             productViewmodel.product);
                         RouteController().pop(context);
                         setState(() {});

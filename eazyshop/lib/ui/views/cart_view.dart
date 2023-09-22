@@ -1,5 +1,6 @@
 import 'package:eazyshop/ui/components/custom_listtile.dart';
 import 'package:eazyshop/ui/components/empty_screen.dart';
+import 'package:eazyshop/ui/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/viewmodels/cart_viewmodel.dart';
@@ -49,107 +50,106 @@ class _CartScreenState extends State<CartScreen> {
           style: TextStyle(color: ceoPurple, fontSize: TextSize().h3(context)),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          //  height: MediaQuery.of(context).size.height,
-          child: _cartViewmodel.getCartForVendor(vendorId).isNotEmpty
-              ? Column(
-                  children: [
-                    Column(
-                      children: [
-                        for (int index = 0;
-                            index <
-                                _cartViewmodel
-                                    .getCartItemCountForVendor(vendorId);
-                            index++)
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: ceoWhite,
+      body: _cartViewmodel.getCartForVendor(vendorId).isNotEmpty
+          ? SingleChildScrollView(
+              child: Container(
+                  //  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                children: [
+                  Column(
+                    children: [
+                      for (int index = 0;
+                          index <
+                              _cartViewmodel
+                                  .getCartItemCountForVendor(vendorId);
+                          index++)
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: ceoWhite,
+                          ),
+                          child: CustomListTile(
+                            title: Text(
+                              _cartViewmodel
+                                  .getCartForVendor(vendorId)[index]
+                                  .name,
+                              style: TextStyle(
+                                fontSize: TextSize().p(context),
+                                fontWeight: FontWeight.w500,
+                                color: ceoPurple,
+                              ),
                             ),
-                            child: CustomListTile(
-                              title: Text(
-                                _cartViewmodel
-                                    .getCartForVendor(vendorId)[index]
-                                    .name,
-                                style: TextStyle(
-                                  fontSize: TextSize().p(context),
-                                  fontWeight: FontWeight.w500,
-                                  color: ceoPurple,
-                                ),
+                            subtitle: Text(
+                              '\u20A6${_cartViewmodel.getCartForVendor(vendorId)[index].total}',
+                              style: TextStyle(
+                                fontSize: TextSize().p(context),
+                                fontWeight: FontWeight.w600,
+                                color: ceoPurple,
                               ),
-                              subtitle: Text(
-                                '\u20A6${_cartViewmodel.getCartForVendor(vendorId)[index].total}',
-                                style: TextStyle(
-                                  fontSize: TextSize().p(context),
-                                  fontWeight: FontWeight.w600,
-                                  color: ceoPurple,
+                            ),
+                            trailing: Column(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.remove_circle),
+                                  onPressed: () {
+                                    // Decrease quantity logic
+                                    _cartViewmodel.decreaseQuantityForVendor(
+                                        _cartViewmodel
+                                            .getCartForVendor(vendorId)[index],
+                                        vendorId);
+                                  },
                                 ),
-                              ),
-                              trailing: Column(
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.remove_circle),
-                                    onPressed: () {
-                                      // Decrease quantity logic
-                                      _cartViewmodel.decreaseQuantityForVendor(
+                                Text(
+                                  _cartViewmodel
+                                      .getQuantityForVendor(
                                           _cartViewmodel.getCartForVendor(
                                               vendorId)[index],
-                                          vendorId);
-                                    },
-                                  ),
-                                  Text(
-                                    _cartViewmodel
-                                        .getQuantityForVendor(
-                                            _cartViewmodel.getCartForVendor(
-                                                vendorId)[index],
-                                            vendorId)
-                                        .toString(),
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.add_circle),
-                                    onPressed: () {
-                                      // Increase quantity logic
-                                      _cartViewmodel.increaseQuantityForVendor(
-                                          _cartViewmodel.getCartForVendor(
-                                              vendorId)[index],
-                                          vendorId);
-                                    },
-                                  ),
-                                ],
-                              ),
-                              leading: Container(
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                          vendorId)
+                                      .toString(),
+                                  style: TextStyle(fontSize: 16),
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/indoor-shot-adorable-female-buyer-spending-her-free-time-boutique-standing-near-dummy-with-clothes-reading-news-online-while-using-free-internet-connection-shop-assistant-selling-clothes copy.jpg',
-                                    fit: BoxFit.cover,
-                                  ),
+                                IconButton(
+                                  icon: Icon(Icons.add_circle),
+                                  onPressed: () {
+                                    // Increase quantity logic
+                                    _cartViewmodel.increaseQuantityForVendor(
+                                        _cartViewmodel
+                                            .getCartForVendor(vendorId)[index],
+                                        vendorId);
+                                  },
+                                ),
+                              ],
+                            ),
+                            leading: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  'assets/indoor-shot-adorable-female-buyer-spending-her-free-time-boutique-standing-near-dummy-with-clothes-reading-news-online-while-using-free-internet-connection-shop-assistant-selling-clothes copy.jpg',
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
                           ),
-                      ],
-                    ),
-                    Text(
-                      'Subtotal: \u20A6${_cartViewmodel.getCartSubtotalForVendor(vendorId)}',
-                      style: TextStyle(
-                          fontSize: TextSize().h3(context),
-                          fontWeight: FontWeight.w500,
-                          color: ceoPurpleGrey),
-                    ),
-                  ],
-                )
-              : Empty(),
-        ),
-      ),
+                        ),
+                    ],
+                  ),
+                  Text(
+                    'Subtotal: \u20A6${_cartViewmodel.getCartSubtotalForVendor(vendorId)}',
+                    style: TextStyle(
+                        fontSize: TextSize().h3(context),
+                        fontWeight: FontWeight.w500,
+                        color: ceoPurpleGrey),
+                  ),
+                ],
+              )),
+            )
+          : Empty(),
       bottomNavigationBar: _cartViewmodel.getCartForVendor(vendorId).isNotEmpty
           ? BottomAppBar(
               padding: EdgeInsets.all(10),
@@ -164,7 +164,9 @@ class _CartScreenState extends State<CartScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    RouteController().push(context, CheckoutScreen());
+                  },
                   child: Text(
                     "Checkout",
                     style: TextStyle(
@@ -172,7 +174,7 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
               ))
-          : null,
+          : Container(),
     );
   }
 }

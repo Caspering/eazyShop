@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:math';
+
 import 'package:eazyshop/core/models/seller_model.dart';
 import 'package:eazyshop/ui/components/cart_icon.dart';
 import 'package:eazyshop/ui/components/custom_grid_view.dart';
@@ -21,6 +23,14 @@ class SellerGrid extends StatefulWidget {
 }
 
 class _SellerGridState extends State<SellerGrid> {
+  List<String> links = [
+    'assets/wallmart.png',
+    'assets/euekjcgbe0dvisaiaave.png',
+    'assets/images.png',
+    'assets/download.png'
+  ];
+  Random num = Random();
+
   @override
   Widget build(BuildContext context) {
     final sellerViewmodel = Provider.of<SellerViewmodel>(context);
@@ -30,6 +40,7 @@ class _SellerGridState extends State<SellerGrid> {
       future: sellerViewmodel.getShops(),
       initialData: sellerViewmodel.shops,
       builder: (context, snapshot) {
+        print(snapshot.error);
         if (snapshot.hasData) {
           if (snapshot.data!.isNotEmpty) {
             List<Seller> sellers = snapshot.data!.take(7).toList();
@@ -59,8 +70,7 @@ class _SellerGridState extends State<SellerGrid> {
                               width: 80,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/euekjcgbe0dvisaiaave.png')),
+                                      image: AssetImage(links[num.nextInt(4)])),
                                   color: ceoWhite,
                                   borderRadius: BorderRadius.circular(10),
                                   border: Border.all(color: greyOne!)),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:eazyshop/core/viewmodels/cart_viewmodel.dart';
 import 'package:eazyshop/ui/components/current_shop_drawer.dart';
 import 'package:eazyshop/ui/components/current_store_cart_icon.dart';
@@ -10,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../core/services/authentication.dart';
 import '../../core/viewmodels/product_viewmodel.dart';
 import '../../core/viewmodels/seller_viewmodel.dart';
+import '../../core/viewmodels/store_baseviewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/color.dart';
 import '../../utils/font_size.dart';
@@ -32,6 +35,7 @@ class _CurrentShopIndexState extends State<CurrentShopIndex> {
   Widget build(BuildContext context) {
 //final authService = Provider.of<AuthenticationService>(context);
     //   final authService = Provider.of<AuthenticationService>(context);
+    final storeViewmodel = Provider.of<StoreBaseViewmodel>(context);
     final userViewModel = Provider.of<UserViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
     final sellerViewmodel = Provider.of<SellerViewmodel>(context);
@@ -101,7 +105,7 @@ class _CurrentShopIndexState extends State<CurrentShopIndex> {
               backgroundColor: ceoWhite,
               elevation: 0.0,
             ),
-            body: CurrentStoreFeed()),
+            body: storeViewmodel.currentScreen),
         drawer: CurrentShopDrawer());
   }
 

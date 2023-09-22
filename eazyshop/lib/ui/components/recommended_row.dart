@@ -76,9 +76,7 @@ class _RecommendedState extends State<Recommended> {
                                   productViewmodel
                                       .setCurrentProduct(snapshot.data?[index]);
                                 },
-                                price: snapshot.data?[index].price,
-                                url: snapshot.data?[index].productImage,
-                                productName: snapshot.data?[index].productName,
+                                product: snapshot.data![index],
                               );
                             },
                           ),

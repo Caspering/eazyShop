@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/services/authentication.dart';
 import '../../core/viewmodels/product_viewmodel.dart';
+import '../../core/viewmodels/seller_viewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/categories.dart';
 import '../../utils/color.dart';
@@ -23,6 +24,7 @@ class _CategoriesViewState extends State<CategoriesView> {
     final authService = Provider.of<AuthenticationService>(context);
     final userViewModel = Provider.of<UserViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
+    final sellerViewmodel = Provider.of<SellerViewmodel>(context);
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -38,8 +40,8 @@ class _CategoriesViewState extends State<CategoriesView> {
                       context,
                       CustomGridView(
                         gridCategory: categories[index],
-                        categoryProducts:
-                            productViewmodel.getCategoryProd(categories[index]),
+                        categoryProducts: productViewmodel.getCategoryProdStore(
+                            categories[index], sellerViewmodel.currentSeller),
                       ));
                 },
                 trailing: Icon(

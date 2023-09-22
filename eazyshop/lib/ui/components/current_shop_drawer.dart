@@ -1,5 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:eazyshop/core/viewmodels/store_baseviewmodel.dart';
+import 'package:eazyshop/ui/views/categories.dart';
+import 'package:eazyshop/ui/views/current_store_feed.dart';
+import 'package:eazyshop/ui/views/home_view.dart';
 import 'package:eazyshop/utils/categories.dart';
 import 'package:eazyshop/utils/color.dart';
 import 'package:eazyshop/utils/font_size.dart';
@@ -11,6 +15,7 @@ import '../../core/viewmodels/cart_viewmodel.dart';
 import '../../core/viewmodels/product_viewmodel.dart';
 import '../../core/viewmodels/seller_viewmodel.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
+import 'custom_grid_view.dart';
 
 class CurrentShopDrawer extends StatefulWidget {
   const CurrentShopDrawer({super.key});
@@ -24,6 +29,7 @@ class _CurrentShopDrawerState extends State<CurrentShopDrawer> {
   Widget build(BuildContext context) {
     final userViewModel = Provider.of<UserViewmodel>(context);
     final productViewmodel = Provider.of<ProductViewmodel>(context);
+    final storeViewmodel = Provider.of<StoreBaseViewmodel>(context);
     final sellerViewmodel = Provider.of<SellerViewmodel>(context);
     final _cartViewmodel = Provider.of<CartViewmodel>(context);
     return SafeArea(
@@ -41,6 +47,7 @@ class _CurrentShopDrawerState extends State<CurrentShopDrawer> {
                     contentPadding: EdgeInsets.zero,
                     onTap: () {
                       RouteController().pop(context);
+                      storeViewmodel.setCurrentScreen(CurrentStoreFeed());
                     },
                     leading: Icon(
                       Icons.arrow_back,
@@ -90,6 +97,9 @@ class _CurrentShopDrawerState extends State<CurrentShopDrawer> {
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
+                    onTap: () {
+                      storeViewmodel.setCurrentScreen(CurrentStoreFeed());
+                    },
                     leading: Icon(
                       Icons.store,
                       color: ceoBlack,
@@ -117,15 +127,25 @@ class _CurrentShopDrawerState extends State<CurrentShopDrawer> {
                     ),
                   ),
                   for (int i = 0; i < categories.length; i++)
-                    Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Text(
-                          categories[i],
-                          style: TextStyle(
-                              fontSize: TextSize().p(context),
-                              color: ceoBlack,
-                              fontWeight: FontWeight.w500),
-                        )),
+                    GestureDetector(
+                        onTap: () {
+                          storeViewmodel.setCurrentScreen(CustomGridView(
+                            gridCategory: categories[i],
+                            categoryProducts:
+                                productViewmodel.getCategoryProdStore(
+                                    categories[i],
+                                    sellerViewmodel.currentSeller?.id ?? ""),
+                          ));
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 20),
+                            child: Text(
+                              categories[i],
+                              style: TextStyle(
+                                  fontSize: TextSize().p(context),
+                                  color: ceoBlack,
+                                  fontWeight: FontWeight.w500),
+                            ))),
                 ],
               ),
             )));

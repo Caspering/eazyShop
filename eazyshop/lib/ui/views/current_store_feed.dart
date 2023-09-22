@@ -1,3 +1,4 @@
+import 'package:eazyshop/ui/components/custom_row.dart';
 import 'package:eazyshop/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,16 @@ class _CurrentStoreFeedState extends State<CurrentStoreFeed> {
       height: double.infinity,
       width: double.infinity,
       color: ceoWhite,
+      padding: EdgeInsets.all(10),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomRow(category: "Home and office", header: "Home and Office"),
+            CustomRow(category: "Fashion", header: "Clean Up nice"),
+            CustomRow(category: "Kitchen", header: "For your kitchen"),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -11,38 +11,29 @@ class Empty extends StatefulWidget {
 class EmptyState extends State<Empty> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: ceoWhite,
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: ceoWhite,
-        child: Column(children: [
-          Container(
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height / 4,
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      color: ceoWhite,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+            width: MediaQuery.of(context).size.width / 2,
+            height: MediaQuery.of(context).size.height / 4,
 
-              // child: Image.asset(),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image:
-                          AssetImage('assets/undraw_Empty_re_opql copy.png')))),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Text(
-              "Nothing to see here",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: TextSize().h1(context),
-                  color: ceoPurple),
-            ),
-          ),
-        ]),
-      ),
+            // child: Image.asset(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image:
+                        AssetImage('assets/undraw_Empty_re_opql copy.png')))),
+        Text(
+          "Nothing to see here",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: TextSize().h1(context),
+              color: ceoPurple),
+        ),
+      ]),
     );
   }
 }

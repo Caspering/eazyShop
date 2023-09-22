@@ -31,13 +31,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     // String vendorId = _cartViewmodel.currentVendor ?? "";
     return Scaffold(
         appBar: AppBar(
-          actions: [
-            CartIcon(
-              onPressed: () {
-                RouteController().push(context, SuperCartScreen());
-              },
-            )
-          ],
           elevation: 0.0,
           backgroundColor: ceoWhite,
           leading: IconButton(
@@ -108,10 +101,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
                       Text(
-                        productViewmodel.product!.isFlash == false
-                            ? formatter.format(productViewmodel.product!.price)
-                            : formatter.format(
-                                productViewmodel.product!.discountPrice),
+                        formatter.format(productViewmodel.product!.price),
                         style: TextStyle(
                           fontSize: TextSize().p(context),
                           fontWeight: FontWeight.w500,

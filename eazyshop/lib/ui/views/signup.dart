@@ -53,7 +53,7 @@ class RegisterViewState extends State<RegisterView> {
                           margin: EdgeInsets.only(left: 15),
                           width: MediaQuery.of(context).size.width / 1.2,
                           child: Text(
-                            "Join us\nat eazyShop today! 💪",
+                            "Join us\nat eazycart today! 💪",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: TextSize().h1(context),

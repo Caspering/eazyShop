@@ -46,7 +46,8 @@ class _ShopCardState extends State<ShopCard> {
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),
-                  height: MediaQuery.of(context).size.height / 3.5,
+                  //  height: MediaQuery.of(context).size.height / 3.5,
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5), color: ceoWhite),
                   child: Column(
@@ -78,39 +79,6 @@ class _ShopCardState extends State<ShopCard> {
                               'assets/euekjcgbe0dvisaiaave.png',
                               fit: BoxFit.cover,
                             ),
-                          ),
-                        ),
-                      ),
-                      Expanded(child: Container()),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 60,
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: ceoPurple,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            RouteController().push(
-                                context,
-                                CustomGridView(
-                                  gridCategory: snapshot.data?.name,
-                                  action: CartIcon(
-                                    onPressed: () {
-                                      RouteController()
-                                          .push(context, SuperCartScreen());
-                                    },
-                                  ),
-                                  categoryProducts: productViewmodel
-                                      .getCeoProducts(widget.userId),
-                                ));
-                          },
-                          child: Text(
-                            "Continue Shopping",
-                            style: TextStyle(
-                                color: ceoWhite,
-                                fontSize: TextSize().h3(context)),
                           ),
                         ),
                       ),

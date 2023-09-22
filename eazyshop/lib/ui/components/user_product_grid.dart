@@ -48,9 +48,7 @@ class _UserProductGridState extends State<UserProductGrid> {
                       productViewmodel.setCurrentProduct(snapshot.data?[index]);
                       RouteController().push(context, ProductDetails());
                     },
-                    price: snapshot.data?[index].price,
-                    productName: snapshot.data?[index].productName,
-                    url: snapshot.data?[index].productImage,
+                    product: snapshot.data![index],
                   );
                 }));
           }
