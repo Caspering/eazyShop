@@ -30,8 +30,8 @@ class _CeoProductsState extends State<CeoProducts> {
     return Container(
       margin: EdgeInsets.only(top: 7),
       child: FutureBuilder<List<Product>>(
-        future:
-            productViewmodel.getCeoProducts(productViewmodel.product?.sellerId),
+        //  future:
+        //    productViewmodel.getCeoProducts(productViewmodel.product?.sellerId),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data?.length != 0) {
             return Container(
@@ -54,16 +54,7 @@ class _CeoProductsState extends State<CeoProducts> {
                             ),
                             Expanded(child: Container()),
                             IconButton(
-                                onPressed: () {
-                                  RouteController().push(
-                                      context,
-                                      CustomGridView(
-                                        gridCategory: "More by this vendor",
-                                        categoryProducts: productViewmodel
-                                            .getCeoProducts(productViewmodel
-                                                .product?.sellerId),
-                                      ));
-                                },
+                                onPressed: () {},
                                 icon: Icon(
                                   Icons.arrow_forward,
                                   color: ceoPurpleGrey,
@@ -78,11 +69,7 @@ class _CeoProductsState extends State<CeoProducts> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: snapshot.data?.map((item) {
                                 return ProductCard(
-                                  onTapped: () {
-                                    RouteController()
-                                        .push(context, ProductDetails());
-                                    productViewmodel.setCurrentProduct(item);
-                                  },
+                                  onTapped: () {},
                                   product: item,
                                 );
                               }).toList() ??

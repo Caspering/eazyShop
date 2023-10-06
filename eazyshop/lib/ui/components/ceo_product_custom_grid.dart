@@ -72,12 +72,7 @@ class _CeoCustomGridState extends State<CeoCustomGrid> {
                   itemCount: snapshot.data?.length,
                   itemBuilder: ((context, index) {
                     return ProductCard(
-                      onTapped: () {
-                        productViewmodel
-                            .setCurrentProduct(snapshot.data?[index]);
-                        RouteController().push(context, CeoProductDetails());
-                        productViewmodel.setCurrentContext(context);
-                      },
+                      onTapped: () {},
                       price: snapshot.data?[index].price,
                       productName: snapshot.data?[index].productName,
                       url: snapshot.data?[index].productImage,

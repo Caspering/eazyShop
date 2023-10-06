@@ -19,7 +19,7 @@ class _AvatarState extends State<Avatar> {
     final authService = Provider.of<AuthenticationService>(context);
     final userViewModel = Provider.of<UserViewmodel>(context);
     return FutureBuilder<Users>(
-      future: userViewModel.getCeoById(authService.userId),
+      // future: userViewModel.getCeoById(authService.userId),
       builder: (context, snapshot) {
         if (!snapshot.hasData ||
             snapshot.connectionState == ConnectionState.waiting) {

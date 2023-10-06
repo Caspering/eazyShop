@@ -20,15 +20,15 @@ class _ChatAvatarState extends State<ChatAvatar> {
   Widget build(BuildContext context) {
     UserViewmodel _userViewmodel = Provider.of<UserViewmodel>(context);
     return FutureBuilder<Users>(
-        future: _userViewmodel.getCeoById(widget.userId),
+        //  future: _userViewmodel.getCeoById(widget.userId),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return CircleAvatar(
-              backgroundImage: NetworkImage(snapshot.data?.imageUrl ?? ""),
-            );
-          } else {
-            return Container();
-          }
-        });
+      if (snapshot.hasData) {
+        return CircleAvatar(
+          backgroundImage: NetworkImage(snapshot.data?.imageUrl ?? ""),
+        );
+      } else {
+        return Container();
+      }
+    });
   }
 }
