@@ -27,18 +27,22 @@ class Users {
     this.username,
   });
 
-  Users.fromMap(Map snapshot, this.id)
-      : bio = snapshot['bio'],
-        ceoScore = snapshot['ceoScore'],
-        subscribers = snapshot['subscribers'],
-        username = snapshot['username'],
-        firstname = snapshot['firstname'],
-        lastname = snapshot['lastname'],
-        imageUrl = snapshot['imageUrl'],
-        instagramLink = snapshot['instagramLink'],
-        phoneNumber = snapshot['phoneNumber'],
-        whatsappLink = snapshot['whatsappLink'],
-        twitterLink = snapshot['twitterLink'];
+  factory Users.fromJson(Map<String, dynamic> json) {
+    return Users(
+      id: json['id'],
+      bio: json['bio'],
+      ceoScore: json['ceoScore'],
+      subscribers: json['subscribers'],
+      username: json['username'],
+      firstname: json['firstname'],
+      lastname: json['lastname'],
+      imageUrl: json['imageUrl'],
+      instagramLink: json['instagramLink'],
+      phoneNumber: json['phoneNumber'],
+      whatsappLink: json['whatsappLink'],
+      twitterLink: json['twitterLink'],
+    );
+  }
 
   toJson() {
     return {

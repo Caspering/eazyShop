@@ -15,12 +15,17 @@ class Seller {
 
   double get rating => totalRating / totalRaters;
 
-  Seller.fromMap(Map snapshot, this.id)
-      : name = snapshot['name'] ?? "",
-        logoUrl = snapshot['logoUrl'] ?? "",
-        totalRating = snapshot['totalRating'] ?? 0,
-        productCategories = snapshot['productCategories'] ?? [],
-        totalRaters = snapshot['totalRaters'] ?? 0;
+  factory Seller.fromJson(Map<String, dynamic> json) {
+    return Seller(
+      id: json['id'],
+      name: json['name'] ?? "",
+      logoUrl: json['logoUrl'] ?? "",
+      totalRating: json['totalRating'] ?? 0,
+      productCategories: json['productCategories'] ?? [],
+      totalRaters: json['totalRaters'] ?? 0,
+    );
+  }
+
   toJson() {
     return {
       "name": name,

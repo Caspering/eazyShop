@@ -2,21 +2,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String _baseUrl = 'https://api.example.com';
+  final String baseUrl;
+  ApiService({required this.baseUrl});
 
   Future<dynamic> get(String endpoint) async {
-    final response = await http.get(Uri.parse('$_baseUrl$endpoint'));
+    final response = await http.get(Uri.parse('$baseUrl$endpoint'));
     return _handleResponse(response);
   }
 
   Future<dynamic> getById(String endpoint, int id) async {
-    final response = await http.get(Uri.parse('$_baseUrl$endpoint/$id'));
+    final response = await http.get(Uri.parse('$baseUrl$endpoint/$id'));
     return _handleResponse(response);
   }
 
   Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
     final response = await http.post(
-      Uri.parse('$_baseUrl$endpoint'),
+      Uri.parse('$baseUrl$endpoint'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data),
     );
@@ -25,7 +26,7 @@ class ApiService {
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
     final response = await http.put(
-      Uri.parse('$_baseUrl$endpoint'),
+      Uri.parse('$baseUrl$endpoint'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data),
     );
@@ -33,14 +34,14 @@ class ApiService {
   }
 
   Future<dynamic> delete(String endpoint) async {
-    final response = await http.delete(Uri.parse('$_baseUrl$endpoint'));
+    final response = await http.delete(Uri.parse('$baseUrl$endpoint'));
     return _handleResponse(response);
   }
 
   Future<dynamic> update(
       String endpoint, int id, Map<String, dynamic> data) async {
     final response = await http.put(
-      Uri.parse('$_baseUrl$endpoint/$id'),
+      Uri.parse('$baseUrl$endpoint/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data),
     );

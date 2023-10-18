@@ -18,27 +18,28 @@ class _AvatarState extends State<Avatar> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthenticationService>(context);
     final userViewModel = Provider.of<UserViewmodel>(context);
-    return FutureBuilder<Users>(
-      // future: userViewModel.getCeoById(authService.userId),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData ||
-            snapshot.connectionState == ConnectionState.waiting) {
-          Container(
-            child: CircleAvatar(
-              radius: 7,
-              backgroundColor: ceoWhite,
-            ),
-            padding: EdgeInsets.all(10),
-          );
-        }
-        return Container(
-          child: CircleAvatar(
-            radius: 7,
-            backgroundImage: NetworkImage(snapshot.data?.imageUrl ?? ""),
-          ),
-          padding: EdgeInsets.all(10),
-        );
-      },
-    );
+    return Placeholder();
+    // return FutureBuilder<Users>(
+    //   // future: userViewModel.getCeoById(authService.userId),
+    //   builder: (context, snapshot) {
+    //     if (!snapshot.hasData ||
+    //         snapshot.connectionState == ConnectionState.waiting) {
+    //       Container(
+    //         child: CircleAvatar(
+    //           radius: 7,
+    //           backgroundColor: ceoWhite,
+    //         ),
+    //         padding: EdgeInsets.all(10),
+    //       );
+    //     }
+    //     return Container(
+    //       child: CircleAvatar(
+    //         radius: 7,
+    //         backgroundImage: NetworkImage(snapshot.data?.imageUrl ?? ""),
+    //       ),
+    //       padding: EdgeInsets.all(10),
+    //     );
+    //   },
+    // );
   }
 }

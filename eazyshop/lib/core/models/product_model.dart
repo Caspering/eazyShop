@@ -25,18 +25,23 @@ class Product {
       this.instockQuantity,
       this.category,
       this.sellerId});
-  Product.fromMap(Map snapshot, this.id)
-      : dateAdded = snapshot['dateAdded'],
-        description = snapshot['description'],
-        discountPrice = snapshot['discountPrice'],
-        isDiscounted = snapshot['isDiscounted'],
-        price = snapshot['price'],
-        productImage = snapshot['productImage'],
-        productName = snapshot['productName'],
-        category = snapshot['category'],
-        barcode = snapshot['barcode'],
-        instockQuantity = snapshot['instockQuantity'],
-        sellerId = snapshot['sellerId'];
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      dateAdded: json['dateAdded'],
+      description: json['description'],
+      discountPrice: json['discountPrice'],
+      isDiscounted: json['isDiscounted'],
+      price: json['price'],
+      productImage: json['productImage'],
+      productName: json['productName'],
+      category: json['category'],
+      barcode: json['barcode'],
+      instockQuantity: json['instockQuantity'],
+      sellerId: json['sellerId'],
+    );
+  }
+
   toJson() {
     return {
       "dateAdded": dateAdded,
